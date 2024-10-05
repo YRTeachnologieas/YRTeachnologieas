@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Y&R Technologies</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Style for the video gallery container */
+        .video-gallery {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .video-item {
+            position: relative;
+            width: 25%;
+            cursor: pointer;
+        }
+
+        .video-item img {
+            width: 70%;
+            border-radius: 3px;
+            transition: transform 0.3s;
+        }
+
+        .video-item img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Style for the modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(227, 11, 11, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 80%;
+            width: auto;
+            position: relative;
+        }
+
+        .modal video {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: #333;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: red;
+        }
+
+        /* Ensure responsiveness */
+        @media (max-width: 768px) {
+            .video-item {
+                width: 100%;
+            }
+
+            .modal-content {
+                max-width: 95%;
+            }
+        }
+
+        .project-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px;
+        }
+        .project {
+            width: 300px;
+            height: 200px;
+            margin: 20px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgb(0, 0, 0);
+            font-size: 1.5em;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .project:hover {
+            transform: scale(1.05);
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(62, 5, 5, 0.919);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background-color: rgb(28, 66, 75);
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+        }
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: #c8c2c2;
+            font-size: 30px;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: black;
+        }
+
+        .project h2 {
+            margin-bottom: 5px;
+        }
+        .project p {
+            margin: 0;
+            font-size: 1em;
+        }
+        .background-image {
+            background-image: url('path_to_your_background_image.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        /* Banner styles */
+        .banner {
+            position: relative;
+            height: 400px; /* Height for the banners */
+            color: #fffefe;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 20px; /* Spacing between banners */
+        }
+        .banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5); /* Dark overlay for readability */
+        }
+        .banner-content {
+            position: relative;
+            z-index: 1; /* Ensures text is above the overlay */
+        }
+        .banner h2 {
+            font-size: 3em;
+            margin: 0;
+        }
+        .banner p {
+            font-size: 1.5em;
+        }
+        .banner {
+            background-image: url('images-2 copy.jpeg');/* Replace with your banner image path */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgb(10, 235, 138);
+            text-align: center; 
+        
+        }
+        .project-details {
+            margin: 10px 0;
+            padding: 10px;
+            border: 3px solid #00ff84;
+        }
+        .project-photo {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Social Media Icons styling */
+        .social-media {
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+        }
+        .social-media a {
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        .social-media img {
+            width: 40px;
+            height: 40px;
+        }
+        /* Footer Styling */
+        footer {
+            background-color: #333;
+            color: #08ffff;
+            padding: 20px 0;
+            text-align: center;
+        }
+        footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        footer p {
+            margin: 0;
+            font-size: 1em;
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .social-media img {
+                width: 30px;
+                height: 30px;
+            }
+        }
+        /* Blog Banner Styles */
+        .blog-banner {
+            background-image: url('Futuristic-Red-Blue-Background-Design-Graphics-30683310-1 copy.jpg'); /* Replace with your actual image path */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 400px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgb(237, 246, 245);
+            text-align: center;
+        }
+        .blog-banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5); /* Dark overlay for text readability */
+        }
+        .blog-banner-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .blog-banner h1 {
+            font-size: 3em;
+            margin: 0;
+        }
+
+        .blog-banner p {
+            font-size: 1.5em;
+        }
+
+        /* Responsive for smaller devices */
+        @media (max-width: 768px) {
+            .blog-banner h1 {
+                font-size: 2em;
+            }
+
+            .blog-banner p {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Y&R Technologies</h1>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home">
+        <div class="container">
+            <h2>Welcome to Y&R Technologies</h2>
+            <p>Providing Innovative Tech Solutions for Your Business Growth</p>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <h2>☆Our Services 🏠🏠🏠🏠🏠</h2>
+    <!--Flats Banner-->        
+    <div class="banner" style="background-image: url('istockphoto-1165384568-612x612 copy.jpg');"> <!-- Replace with actual image path -->
+                <div class="banner-overlay"></div>
+                <div class="banner-content">
+                    <h2>Find Your Dream Flat</h2>
+                    <p>Comfortable living spaces tailored for your lifestyle.</p>
+        </div>
+     </div>
+            <!-- Plots Banner -->
+    <div class="banner" style="background-image: url('plots 9 copy.jpeg');"> <!-- Replace with actual image path -->
+        <div class="banner-overlay"></div>
+        <div class="banner-content">
+            <h2>Discover Your Perfect Plot</h2>
+            <p>Build your dream home on prime land.</p>
+        </div>
+    </div>
+    <!-- Properties Banner -->
+    <div class="banner" style="background-image: url('1 copy.jpg');"> <!-- Replace with actual image path -->
+        <div class="banner-overlay"></div>
+        <div class="banner-content">
+            <h2>Explore Our Exclusive Properties</h2>
+            <p>Exceptional homes and investments await you.</p>
+        </div>
+    </div>
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+    
+            </ul>
+            </div>
+<h2>☞ ☞ ☞ ☞ ☞Our All Plots ✺ Flats & Properties details  ▼▼▼▼▼</h2>
+<!-- Projects Section -->
+<div class="project-container">
+     <!-- Project 1 -->
+    <div class="project" style="background-image: url('4733757-130453-maasters-capitol-avenue copy.jpg');" onclick="openModal('project1')">
+        <h2></h2>
+        <p></p>
+    </div>
+    <!-- Project 2 -->
+    <div class="project" style="background-image: url('1583319989544 copy.jpeg');" onclick="openModal('project2')">
+        <h2></h2>
+        <p></p>
+    </div>
+    <!-- Project 3 -->
+    <div class="project" style="background-image: url('1520102343018 copy.jpeg');" onclick="openModal('project3')">
+        <h2></h2>
+        <p></p>
+    </div>
+    <div class="project" style="background-image: url('plottips copy.png');" onclick="openModal('project4')">
+        <h2></h2>
+        <p></p>
+    </div>
+</div>
+<!-- Modal for Project 1 -->
+ <div id="project1" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('project1')">&times;</span>
+        <h2>❖ Capitol-Avenue ❖</h2>
+        <h2>For Get More Information Please 🙏🙏🙏🙏🙏 👉👉👉👉👉  ◎ Contact: Mob: +91- 7579568911 | email: yash@yrtechnologies.com ◎</h2>
+        <img src="Capitol-Avenue-banner-in copy.jpg" alt="Project 1 Image" style="width:100%; height:auto;">
+        <p></p>
+    </div>
+</div>
+<!-- Modal for Project 2 -->
+ <div id="project2" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('project2')">&times;</span>
+        <h2>✬ Spectrum mall ✬</h2>
+        <h2>For Get More Information Please 🙏🙏🙏🙏🙏 👉👉👉👉👉 ◎ Contact: Mob: +91- 7579568911 | email: yash@yrtechnologies.com ◎</h2>
+        <img src="1520132437903 copy.jpeg" alt="Project 1 Image" style="width:100%; height:auto;">
+        <p></p>
+    </div>
+</div>
+<!-- Modal for Project 3 -->
+<div id="project3" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('project3')">&times;</span>
+        <h2>✡︎ Commercial flat ✡︎</h2>
+        <h2>For Get More Information Please 🙏🙏🙏🙏🙏 👉👉👉👉👉 ◎ Contact: Mob: +91- 7579568911 | email: yash@yrtechnologies.com ◎</h2>
+        <img src="1 copy.jpg" alt="Project 1 Image" style="width:100%; height:auto;">
+        <p></p>
+    </div>
+</div>
+    <!-- Modal for Project 4 -->
+<div id="project4" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('project4')">&times;</span>
+        <h2>Residential Place ♻︎ 80  Bigha In Bulandshahr ♻︎</h2>
+        <h2>For Get More Information Please 🙏🙏🙏🙏🙏 👉👉👉👉👉 ◎ Contact: Mob: +91- 7579568911 | email: yash@yrtechnologies.com ◎</h2>
+        <img src="matr-bhoomi-city-project-project-large-image1-7171 copy.jpg" alt="Project 1 Image" style="width:100%; height:auto;">
+        <p></p>
+    </div>  
+</div>
+<!-- Video Gallery Section -->
+<h2>☆ 🏡 Our Plot,Flat & Properties Video 🏡 ☆</h2>
+<div class="video-gallery">
+    <!-- Video 1 Thumbnail -->
+    <div class="video-item" onclick="openModal('video1')">
+        <h2>Bulandshahr Plots</h2>
+        <img src="Duplex-Town21 copy.jpg" alt="Video 1 Thumbnail"> <!-- Replace with actual thumbnail -->
+    </div>
+</div>
+<div id="video1" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('video1')">&times;</span>
+        <video controls>
+            <source src="WhatsApp Video 2024-10-04 at 10.42.55 (online-video-cutter.com) copy.mp4" type="video/mp4"> <!-- Replace with actual video -->
+            Your browser does not support the video tag.
+       </video>
+   </div>
+</div>
+
+</div>
+<div class="banner">
+     <h2>☆Location☆ </h2>
+     <p>Sector 75 Near By Metro Station Sector 50 Total Tower - A, B, C, D (4)</p>
+    </div>
+    <img src="spectrum-mall-6 copy.jpg" alt="Spectrum Metro" class="project-photo">
+    <div class="project-details">
+        <h3>Spectrum Metro Project Features</h3>
+        <h4>Total Towers: A, B, C, D (4)</h4>
+        <h4>Office Space (Tower D)</h4>
+        <p>Floors: 4th to 18th</p>
+        <p>Min Size: 580 sq ft (unlockable office space)</p>
+        <p>Price 15k per sq ft</p>
+        <p>Lease: 60-70 per sq ft</p>
+        <h4>Retail Shops (Towers A, B, C, D)</h4>
+        <p>Min Size: 300 sq ft</p>
+        <p>Max Size: Based on requirement</p>
+        <p>Prices:</p>
+         <ul>
+            <li>LGF, GF 35k per sq ft</li>
+            <li>1st Floor 25k per sq ft</li>
+            <li>2nd Floor 22k per sq ft</li>
+                    <li>3rd Floor 18k per sq ft</li>
+                    <li>4th & 5th Floor 16k per sq ft (Food Court)</li>
+                    <li>5th Floor  18k per sq ft (Food Court, Restaurants & Fine Dining)</li>
+                    <li>3rd to Upper  15k per sq ft (Service Apartments, 580 sq ft)</li>
+                </ul>
+                <p>Lease: 120-200 per sq ft</p>
+                <p>Medi Floor: 20k per sq ft</p>
+                <p>Multiplex & Kid's Zone (LGF): 18k per sq ft</p>
+            </div>
+            <img src="1583319989544 copy.jpeg" alt="Spectrum Metro" class="project-photo">
+
+            <!-- Second Project: Capital Avenue -->
+            <div class="banner">
+                <h2>☆ Location Sector 62 Total tower - A,B (2)</h2>
+                <h2></h2>
+                <p></p>
+            </div>
+        
+            <img src="Capitol-Avenue-banner-in copy.jpg" alt="Spectrum Metro" class="project-photo">
+            <div class="project-details">
+                <h3>Capital Avenue Project Features (Under Construction)</h3>
+                <h4>Location: Sector 62</h4>
+                <h4>Total Towers: A, B (2)</h4>
+
+                <h4>Office Space (Tower A & B)</h4>
+                <p>Floors: 4th to 18th</p>
+                <p>Min Size: 600 sq ft</p>
+                <p>Max Size: Depends on requirement</p>
+                <p>B.S.P: 9999 per sq ft</p>
+                <p>AR: 12% yearly</p>
+                <p>Lease: 60-70 per sq ft</p>
+
+                <h4>Retail Shops (Tower A & B)</h4>
+                <p>Min Size: 625 sq ft</p>
+                <p>Max Size: Depends on requirement</p>
+                <p>B.S.P: 28k per sq ft</p>
+                <p>Retail floors: LGF, GF, 1st, 2nd, 3rd</p>
+                <p>Total Retail Space: 2.5 lakh sq ft</p>
+                <p>Retail per floor: 50k sq ft</p>
+                <p>Lease: 120-130 per sq ft</p>
+            </div>
+            <img src="rudz3f2u copy.jpg" alt="Spectrum Metro" class="project-photo">
+
+        </div>
+    </section>
+
+    <!-- Blog Page Banner Section -->
+    <section class="blog-banner">
+        <div class="blog-banner-overlay"></div>
+        <div class="blog-banner-content">
+            <h1>Welcome to Our Blog ☆ Why Y & R Technologies is Leading the Digital Revolution ☆ </h1>
+            <p>Discover the latest trends, insights, and stories from Y & R Technologies In today's rapidly evolving digital world, 
+                businesses need more than just a presence online—they need innovative solutions that propel them forward. 
+                That’s where Y & R Technologies comes in. As a global leader in technology services, 
+                we’re helping businesses harness the power of digital transformation through tailored solutions designed 
+                to meet the unique needs of every client. Here’s why partnering with us could be the best decision your company makes.
+
+            </p>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2>About Us</h2>
+            <p>At Y & R Technologies, we are passionate about delivering innovative tech solutions that help businesses thrive in today's fast-paced digital world.</p>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <p>Email: yash@yrtechnologies.com| Mob: +91- 7579568911 |</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Y&R Technologies. All rights reserved.</p>
+
+            <!-- Social Media Links -->
+            <div class="social-media">
+            <a href="https://www.facebook.com/profile.php?id=61561921864339&mibextid=ZbWKwL" target="_blank">
+                <img src="pngtree-button-on-a-black-surface-with-a-facebook-logo-picture-image_2726964 copy.jpg" alt="Facebook"> <!-- Replace with your icon file -->
+            </a>
+            <a href="https://twitter.com/YRTechnologies" target="_blank">
+                <img src="images copy.png" alt="Twitter"> <!-- Replace with your icon file -->
+            </a>
+            <a href="https://linkedin.com/company/YRTechnologies" target="_blank">
+                <img src="images copy.jpeg" alt="LinkedIn"> <!-- Replace with your icon file -->
+            </a>
+            <a href="https://instagram.com/YRTechnologies" target="_blank">
+                <img src="alexander-shatov-71Qk8ODIBko-unsplash copy.jpg" alt="Instagram"> <!-- Replace with your icon file -->
+            </a>
+        </div>
+    </div>
+</footer>
+<script src="script.js"></script>
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+    </script>
+<script>
+    // Open the modal
+    function openModal(videoId) {
+        document.getElementById(videoId).style.display = 'flex';
+    }
+
+    // Close the modal
+    function closeModal(videoId) {
+        document.getElementById(videoId).style.display = 'none';
+    }
+
+    // Close the modal if the user clicks outside the video content
+    window.onclick = function(event) {
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    }
+</script>
+</body>
+</html>
